@@ -18,6 +18,19 @@ export class App extends Component {
     filter: '',
   };
 
+  componentDidMount() {
+    const contacts = localStorage.getItem('contacts');
+    const parcelContacts = JSON.parse(contacts);
+    if (parcelContacts) {
+      this.setState({ contacts: parcelContacts });
+    }
+  }
+  componentDidUpdate(prevState) {
+    if (this.state.contacts !== prevState.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
+
   generateId = () => {
     return nanoid(6);
   };
